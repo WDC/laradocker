@@ -107,3 +107,4 @@ RUN set -xe && \
         composer global require laravel/vapor-cli && \
         composer clear-cache
 
+ENTRYPOINT ["docker-entrypoint.sh"]
