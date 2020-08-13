@@ -37,6 +37,11 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg ma
 
 RUN echo 'DPkg::options { "--force-confdef"; };' >> /etc/apt/apt.conf
 
+# Install Chrome GPG key and repo.
+#RUN apt-get update && apt-get install -y gnupg2
+RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub >> chrome.pub && apt-key add chrome.pub \
+&& echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+
 # Install required software and common PHP extensions
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -63,6 +68,7 @@ RUN apt-get update && \
         php7.4-imagick \
         php7.4-redis \
         pkg-config \
+	google-chrome-stable \
         libcurl4-openssl-dev \
         libedit-dev \
         libssl-dev \
@@ -96,6 +102,7 @@ RUN curl --silent --location https://deb.nodesource.com/setup_12.x | bash - \
   && apt-get install -y nodejs \
   && curl -L https://www.npmjs.com/install.sh | sh
 
+
 # Setup composer vars
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
@@ -107,4 +114,3 @@ RUN set -xe && \
         composer global require laravel/vapor-cli && \
         composer clear-cache
 
-ENTRYPOINT ["docker-entrypoint.sh"]
