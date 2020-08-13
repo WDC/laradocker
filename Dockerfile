@@ -21,7 +21,7 @@ ENV LANG=en_US.UTF-8
 ENV TERM xterm
 
 # Add PHP7 PPA from ondrej
-RUN apt-get install -y software-properties-common wget && \
+RUN apt-get install -y software-properties-common wget curl && \
     add-apt-repository -y ppa:ondrej/php
 
 #
