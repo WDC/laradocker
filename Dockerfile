@@ -31,9 +31,7 @@ RUN apt-get install -y software-properties-common wget curl && \
 #
 
 # Add the PostgreSQL GPG key.
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list
 
 RUN echo 'DPkg::options { "--force-confdef"; };' >> /etc/apt/apt.conf
 
@@ -63,8 +61,6 @@ RUN apt-get update && \
         php7.4-gd \
         php7.4-dev \
         php7.4-calendar \
-	postgresql-12 \
-	postgresql-client-12 \
         php7.4-imagick \
         php7.4-redis \
         pkg-config \
@@ -80,7 +76,6 @@ RUN apt-get update && \
         curl \
         vim \
         nano \
-        postgresql-client \
         nodejs \
         openssh-client \
 	zip \
@@ -94,8 +89,6 @@ RUN curl -s http://getcomposer.org/installer | php && \
 
 # Source the bash
 RUN . ~/.bashrc
-
-RUN /etc/init.d/postgresql start
 
 # Install NPM
 RUN curl --silent --location https://deb.nodesource.com/setup_12.x | bash - \
